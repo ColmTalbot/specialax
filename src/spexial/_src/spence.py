@@ -29,7 +29,7 @@ def complex_spence_series_0(z):
     sum2 = jnp.sum(temp)
     
     return jnp.where(
-        abs(z) < 1e-15,
+        z == 0,
         np.pi**2 / 6,
         np.pi**2 / 6 - sum1 + jnp.log(z) * sum2
     )
@@ -117,7 +117,6 @@ def spence_jvp(primals, tangents):
     (z,) = primals
     (z_dot,) = tangents
     dspence = spence_gradient(z)
-    jax.debug.print("{} {}", dspence, z_dot)
     return spence(z), z_dot * dspence
 
 
